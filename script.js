@@ -36,7 +36,7 @@ var lampu = 0;
 var kipas = 0;
 
 setInterval(function () {
-  fetch("http://localhost/api")
+  fetch("https://smart-temp.herokuapp.com/api")
     .then((hasil) => hasil.json())
     .then((res) => {
       console.log(res);
