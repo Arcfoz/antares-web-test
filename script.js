@@ -1,4 +1,5 @@
 function darkmode() {
+  dark_Mode = localStorage.getItem("dark-mode");
   const element = document.querySelector(".darklight");
   const sec = document.querySelector(".sec");
   const toggle = document.querySelector(".toggle");
@@ -8,13 +9,34 @@ function darkmode() {
   } else {
     element.innerHTML = "Dark";
   }
+  if (dark_Mode !== "enable") {
+    enableDarkMode();
+  } else {
+    disableDarkMode();
+  }
+}
+
+let dark_Mode = localStorage.getItem("dark-mode");
+
+const enableDarkMode = () => {
+  document.body.classList.add("dark-mode");
+  localStorage.setItem("dark-mode", "enable");
+};
+
+const disableDarkMode = () => {
+  document.body.classList.remove("dark-mode");
+  localStorage.setItem("dark-mode", null);
+};
+
+if (dark_Mode === "enable") {
+  document.querySelector(".sec").classList.toggle("dark");
 }
 
 var lampu = 0;
 var kipas = 0;
 
 setInterval(function () {
-  fetch("https://smart-temp.herokuapp.com/api")
+  fetch("http://localhost/api")
     .then((hasil) => hasil.json())
     .then((res) => {
       console.log(res);
