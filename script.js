@@ -34,7 +34,7 @@ if (dark_Mode === "enable") {
 
 var data = {};
 const timeout = setTimeout(datajson, 2000);
-const link = "https://smart-temp.herokuapp.com/";
+const link = "https://smart-temp.herokuapp.com/api";
 
 setInterval(function () {
   fetch(link)
