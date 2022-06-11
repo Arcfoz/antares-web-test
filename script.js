@@ -120,6 +120,6 @@ function postInfokipas() {
   });
 }
 
-setInterval(function () {
-  console.log(data);
-}, 100);
+// setInterval(function () {
+//   console.log(data);
+// }, 100);
