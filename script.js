@@ -34,15 +34,20 @@ if (dark_Mode === "enable") {
 
 var lampu = 0;
 var kipas = 0;
+var data = {};
+const timeout = setTimeout(datajson, 2000);
+const link = "https://smart-temp.herokuapp.com/api"
 
 setInterval(function () {
-  fetch("https://smart-temp.herokuapp.com/api")
+  fetch(link)
     .then((hasil) => hasil.json())
     .then((res) => {
-      console.log(res);
+      // console.log(res);
+      data = res;
+      // console.log(data);
       document.getElementById("suhu").innerHTML = res.temperature.toString() + "°C";
       document.getElementById("kelembaban").innerHTML = res.humidity.toString() + "%";
-      if (res.lampu == 1) {
+      if (data.lampu == 1) {
         lampu = 1;
         document.getElementById("lampu").innerHTML = value = "ON";
         document.getElementById("switchlampu").checked = true;
@@ -63,19 +68,66 @@ setInterval(function () {
     });
 }, 1000);
 
+function datajson() {
+  console.log(data);
+}
+
 function nilailampu(value) {
   if (value == true) {
     value = "ON";
-    lampu == 1;
+    lampu = 1;
+    data.lampu = 1;
   } else {
     value = "OFF";
     lampu = 0;
+    data.lampu = 0;
   }
   document.getElementById("lampu").innerHTML = value;
 }
 
 function nilaikipas(value) {
-  if (value == true) value = "ON";
-  else value = "OFF";
+  if (value == true) {
+    value = "ON";
+    kipas = 1;
+    data.kipas = 1;
+  } else {
+    value = "OFF";
+    kipas = 0;
+    data.kipas = 0;
+  }
   document.getElementById("kipas").innerHTML = value;
 }
+
+const postBtnlampu = document.getElementById("switchlampu");
+postBtnlampu.addEventListener("click", postInfolampu);
+
+function postInfolampu() {
+  const res = fetch(link, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      parcel: data,
+    }),
+  });
+}
+
+const postBtnkipas = document.getElementById("switchkipas");
+postBtnkipas.addEventListener("click", postInfokipas);
+
+function postInfokipas() {
+  const res = fetch(link, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      parcel: data,
+    }),
+  });
+}
+
+// setInterval(function () {
+//   console.log(data);
+// }, 100);
